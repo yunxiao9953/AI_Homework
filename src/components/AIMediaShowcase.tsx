@@ -90,6 +90,7 @@ const AIMediaShowcase = () => {
                   src="/images/Video_cover.png"
                   alt={video.title}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 
@@ -134,6 +135,7 @@ const AIMediaShowcase = () => {
                       src={series.images[0]}
                       alt={series.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                     
@@ -192,6 +194,8 @@ const AIMediaShowcase = () => {
                   src={video.videoUrl}
                   controls
                   autoPlay
+                  preload="metadata"
+                  poster="/images/Video_cover.png"
                   className="w-full h-full"
                 />
               </div>
@@ -236,6 +240,7 @@ const AIMediaShowcase = () => {
                   src={imageSeries.find(s => s.id === selectedSeries)?.images[currentImageIndex]}
                   alt={`Image ${currentImageIndex + 1}`}
                   className="w-full h-full object-contain bg-black"
+                  loading="lazy"
                 />
               </motion.div>
 

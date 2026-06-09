@@ -59,6 +59,7 @@ const GameShowcase = () => {
                   src={game.coverImage}
                   alt={game.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
@@ -169,6 +170,8 @@ const GameShowcase = () => {
                   src={selectedVideo}
                   controls
                   autoPlay
+                  preload="metadata"
+                  poster={currentGame?.coverImage}
                   className="w-full h-full"
                 />
               ) : (
@@ -180,6 +183,7 @@ const GameShowcase = () => {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   title="游戏演示"
+                  loading="lazy"
                 />
               )}
             </div>

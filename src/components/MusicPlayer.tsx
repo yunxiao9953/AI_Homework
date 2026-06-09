@@ -15,24 +15,17 @@ const MusicPlayer = () => {
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
+  const audioCache = useRef<Map<number, HTMLAudioElement>>(new Map());
 
   useEffect(() => {
     if (bgAudioRef.current) {
       bgAudioRef.current.src = backgroundMusicList[currentBgMusic].url;
       bgAudioRef.current.loop = true;
       bgAudioRef.current.volume = 0.3;
+      bgAudioRef.current.preload = 'metadata';
       bgAudioRef.current.play().catch(() => {});
     }
   }, [currentBgMusic]);
-
-  // 预加载所有音频
-  useEffect(() => {
-    musicItems.forEach(item => {
-      const audio = new Audio();
-      audio.src = item.url;
-      audio.preload = 'auto';
-    });
-  }, []);
 
   const playTrack = (index: number) => {
     // 如果点击的是当前正在播放的歌曲，则暂停并收起
@@ -68,16 +61,22 @@ const MusicPlayer = () => {
     setCurrentTrack(index);
     setProgress(0);
     
-    if (audioRef.current) {
-      audioRef.current.src = musicItems[index].url;
-      audioRef.current.load();
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-        setIsLoading(false);
-      }).catch(() => {
-        setIsLoading(false);
-      });
+    let audio = audioCache.current.get(index);
+    
+    if (!audio) {
+      audio = new Audio(musicItems[index].url);
+      audio.preload = 'metadata';
+      audioCache.current.set(index, audio);
     }
+    
+    audioRef.current = audio;
+    
+    audio.play().then(() => {
+      setIsPlaying(true);
+      setIsLoading(false);
+    }).catch(() => {
+      setIsLoading(false);
+    });
   };
 
   const togglePlay = () => {
@@ -87,8 +86,7 @@ const MusicPlayer = () => {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play();
-      setIsPlaying(true);
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
   };
 
@@ -99,7 +97,6 @@ const MusicPlayer = () => {
     setIsPlaying(false);
     setCurrentTrack(null);
     setProgress(0);
-    // 恢复背景音乐
     if (bgAudioRef.current) {
       bgAudioRef.current.play().catch(() => {});
     }
@@ -131,6 +128,26 @@ const MusicPlayer = () => {
       setDuration(audioRef.current.duration);
     }
   };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.addEventListener('timeupdate', handleTimeUpdate);
+      audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.addEventListener('ended', () => {
+        setIsPlaying(false);
+        setCurrentTrack(null);
+        setProgress(0);
+        if (bgAudioRef.current) {
+          bgAudioRef.current.play().catch(() => {});
+        }
+      });
+      return () => {
+        audio.removeEventListener('timeupdate', handleTimeUpdate);
+        audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      };
+    }
+  }, [currentTrack]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -323,17 +340,8 @@ const MusicPlayer = () => {
 
       <audio
         ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => {
-          setIsPlaying(false);
-          setCurrentTrack(null);
-          setProgress(0);
-          if (bgAudioRef.current) {
-            bgAudioRef.current.play().catch(() => {});
-          }
-        }}
         muted={isMuted}
+        preload="metadata"
       />
       <audio ref={bgAudioRef} />
     </section>

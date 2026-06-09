@@ -1,13 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from "vite-tsconfig-paths";
-import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: './',  // 使用相对路径以适配GitHub Pages部署
+  base: './',
   build: {
-    sourcemap: 'hidden',
+    sourcemap: false,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+      },
+    },
+    assetsInlineLimit: 4096,
   },
   plugins: [
     react({
@@ -16,16 +24,26 @@ export default defineConfig({
           'react-dev-locator',
         ],
       },
-    }),
-    traeBadgePlugin({
-      variant: 'dark',
-      position: 'bottom-right',
-      prodOnly: true,
-      clickable: true,
-      clickUrl: 'https://www.trae.ai/solo?showJoin=1',
-      autoTheme: true,
-      autoThemeTarget: '#root'
     }), 
-    tsconfigPaths()
+    tsconfigPaths(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'public/images/',
+          dest: 'images/',
+        },
+        {
+          src: 'public/music/',
+          dest: 'music/',
+        },
+        {
+          src: 'public/videos/',
+          dest: 'videos/',
+        },
+      ],
+    }),
   ],
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'framer-motion', 'lucide-react'],
+  },
 })
