@@ -50,7 +50,7 @@ export interface GameItem {
 export const video: VideoItem = {
   id: '1',
   title: '《寻仙》',
-  description: '讲述了一位看似毫无仙缘的平凡少年，凭借坚韧不拔的意志与奇遇机缘，在修仙世界中披荆斩棘，最终踏上仙道巅峰的传奇故事。',
+  description: '一介凡身无仙缘，但敢为友踏仙途。',
   thumbnail: getCDNUrl('./images/AIVideo_cover.jpg'),
   videoUrl: getCDNUrl('./videos/6月10日.mp4'),
   prompt: `整体风格：纯写意国风水墨动画风，以宣纸纹理为基底，青灰、素白、黛黑为主色调，仅用朱砂、浅粉作零星点缀。远景留白空灵，近景笔触细腻，人物动作飘逸如水墨流动，情绪藏于墨色浓淡之间。BGM全程以古琴、竹笛为主，空灵清冷中暗藏悲怆，转场多用云烟晕染、墨色泼洒效果。
