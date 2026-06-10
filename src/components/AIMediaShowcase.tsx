@@ -87,7 +87,7 @@ const AIMediaShowcase = () => {
             <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-md border border-white/10">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  src="/images/Video_cover.png"
+                  src={video.thumbnail}
                   alt={video.title}
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -172,18 +172,18 @@ const AIMediaShowcase = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/95 flex items-start justify-center pt-8 pb-4 px-4"
             onClick={closeVideoModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-4 right-4 p-3 rounded-full bg-red-500/80 hover:bg-red-600 text-white transition-colors z-10"
+                className="fixed top-6 right-6 p-3 rounded-full bg-red-500/80 hover:bg-red-600 text-white transition-colors z-50"
                 onClick={closeVideoModal}
               >
                 <X size={24} />
@@ -195,7 +195,7 @@ const AIMediaShowcase = () => {
                   controls
                   autoPlay
                   preload="metadata"
-                  poster="/images/Video_cover.png"
+                  poster={video.thumbnail}
                   className="w-full h-full"
                 />
               </div>
@@ -204,9 +204,9 @@ const AIMediaShowcase = () => {
                 <h3 className="text-white font-bold mb-2">{video.title}</h3>
                 <p className="text-white/60 text-sm mb-4">{video.description}</p>
                 
-                <div className="bg-white/5 rounded-xl p-4">
+                <div className="bg-white/5 rounded-xl p-4 max-h-60 overflow-y-auto">
                   <p className="text-white/50 text-xs mb-2">提示词</p>
-                  <p className="text-white/80 text-sm italic">" {video.prompt} "</p>
+                  <p className="text-white/80 text-sm whitespace-pre-line">{video.prompt}</p>
                 </div>
               </div>
             </motion.div>
