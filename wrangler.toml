@@ -1,9 +1,6 @@
 name = "AI_Homework"
-type = "static"
+type = "pages"
 
 [build]
 command = ""
 publish = "."
-
-[env]
-production = { branch = "gh-pages" }
