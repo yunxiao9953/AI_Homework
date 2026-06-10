@@ -49,11 +49,11 @@ export interface GameItem {
 
 export const video: VideoItem = {
   id: '1',
-  title: 'AI动画作品',
-  description: '使用即梦AI和剪映制作的ai短视频',
-  thumbnail: getCDNUrl('./images/Video_cover.png'),
-  videoUrl: getCDNUrl('./videos/24c9194d2dae7fbc9e2e586a4ddff844.mp4'),
-  prompt: '一个女孩在电脑前写代码，突然停电，电脑屏幕变黑，女孩崩溃的表情，动漫风格，赛博朋克色调，戏剧性光影'
+  title: '《寻仙》',
+  description: '讲述了一位看似毫无仙缘的平凡少年，凭借坚韧不拔的意志与奇遇机缘，在修仙世界中披荆斩棘，最终踏上仙道巅峰的传奇故事。',
+  thumbnail: getCDNUrl('./images/AIVideo_cover.jpg'),
+  videoUrl: getCDNUrl('./videos/6月10日.mp4'),
+  prompt: '修仙题材动画短片，古风仙侠风格，少年侠客在云雾缭绕的仙山之间修炼，御剑飞行，法术特效绚丽，中国传统水墨风格与现代动画技术结合'
 };
 
 export const imageSeries: ImageSeries[] = [

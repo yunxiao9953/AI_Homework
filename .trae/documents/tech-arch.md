@@ -1,4 +1,5 @@
 ## 1. Architecture Design
+
 ```mermaid
 flowchart TD
     A[用户浏览器] --> B[前端React应用]
@@ -9,17 +10,23 @@ flowchart TD
 ```
 
 ## 2. Technology Description
-- Frontend: React@18 + TypeScript + tailwindcss@3 + vite
-- Initialization Tool: vite-init
-- Backend: None (纯前端项目)
-- Animation: CSS Animations + Framer Motion
+
+* Frontend: React\@18 + TypeScript + tailwindcss\@3 + vite
+
+* Initialization Tool: vite-init
+
+* Backend: None (纯前端项目)
+
+* Animation: CSS Animations + Framer Motion
 
 ## 3. Route Definitions
-| Route | Purpose |
-|-------|---------|
-| / | 首页，包含所有内容区域 |
+
+| Route | Purpose     |
+| ----- | ----------- |
+| /     | 首页，包含所有内容区域 |
 
 ## 4. Component Structure
+
 ```
 src/
 ├── components/
@@ -37,7 +44,9 @@ src/
 ```
 
 ## 5. Data Model
+
 ### 5.1 Video Item
+
 ```typescript
 interface VideoItem {
   id: string;
@@ -50,6 +59,7 @@ interface VideoItem {
 ```
 
 ### 5.2 Game Item
+
 ```typescript
 interface GameItem {
   id: string;
@@ -61,6 +71,7 @@ interface GameItem {
 ```
 
 ### 5.3 Project Item
+
 ```typescript
 interface ProjectItem {
   id: string;
@@ -71,3 +82,4 @@ interface ProjectItem {
   tags: string[];
 }
 ```
+
